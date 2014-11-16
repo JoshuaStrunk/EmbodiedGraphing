@@ -10,7 +10,7 @@ using Leap;
 
 // Overall Controller object that will instantiate hands and tools when they appear.
 public class HandController : MonoBehaviour {
-
+	LinearLogicController logic;
   // Reference distance from thumb base to pinky base in mm.
   protected const float GIZMO_SCALE = 5.0f;
   protected const float MM_TO_M = 0.001f;
@@ -74,6 +74,9 @@ public class HandController : MonoBehaviour {
   }
 
   void Start() {
+
+		logic = (LinearLogicController) gameObject.GetComponent<LinearLogicController> ();
+
     // Initialize hand lookup tables.
     hand_graphics_ = new Dictionary<int, HandModel>();
     hand_physics_ = new Dictionary<int, HandModel>();
@@ -137,7 +140,7 @@ public class HandController : MonoBehaviour {
 			Vector2 wrist2D = new Vector2(normalize10(normalizedWristPosition.x), normalize10(normalizedWristPosition.y));
 			Vector2 finger2D = new Vector2(normalize10 (normalizedMiddleFingerPosition.x),normalize10(normalizedMiddleFingerPosition.y));
 
-
+			logic.loadValues(wrist2D, finger2D);
 
 			//Vector point = new Vector(100, 75, -125);
 
@@ -146,10 +149,10 @@ public class HandController : MonoBehaviour {
 			//Vector denormalizedCoordinates = interactionBox.DenormalizePoint(normalizedCoordinates);
 
 
-			Debug.Log (wrist2D);
+			//Debug.Log (wrist2D);
 
 			//Debug.Log("X="+leap_hands[h].WristPosition.x+"Y="+leap_hands[h].WristPosition.y);
-			Debug.Log(finger2D);
+			//Debug.Log(finger2D);
 
 
 			//FingerModel fm = new FingerModel();

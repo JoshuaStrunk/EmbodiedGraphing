@@ -23,33 +23,39 @@ public class LinearLogicController : MonoBehaviour {
 	//Amount of time the has been held correctly 
 	float heldTime = 0f;
 
+	float currentM;
+	int currentB;
 
 	public int testingNum = 5;
 	int currentTestNum = 0;
 
 	State state = State.Slope;
 	
+	LineRenderer lineRender;
 
 	//graphicsScript;
 
 	public void loadValues(Vector2 pointA, Vector2 pointB) {
 		this.pointA = pointA;
 		this.pointB = pointB;
+
+		lineRender.SetPosition (0, new Vector3(pointA.x, pointA.y, 0) );
+		lineRender.SetPosition (1, new Vector3(pointB.x, pointB.y, 0) );
 	}
 
 	// Use this for initialization
 	void Start () {
+		lineRender = (LineRenderer) gameObject.GetComponent<LineRenderer> ();
 		//graphicsScript = gameObject.GetComponent<>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-		float currentM;
-		int currentB;
 
 		//Calculate slope
 		currentM = (pointA.y - pointB.y) / (pointA.x - pointB.x);
+		Debug.Log (currentM);
 
 		//Calulate y-intercept
 		currentB = (int) (pointA.y - (pointA.x * currentM));
@@ -99,6 +105,11 @@ public class LinearLogicController : MonoBehaviour {
 	
 	}
 
+	void OnGUI() {
+		GUI.Label (new Rect(0, 0, 150, 30), "Target: Y = " + targetM +"X + " + targetB);
+		GUI.Label (new Rect(0, 30, 200, 30), "Current: Y = " + currentM +"X + " + currentB);
+	}
+
 	void slopeGood() {
 		Debug.Log("Slope Good");
 		//graphicScript.success();
@@ -140,10 +151,10 @@ public class LinearLogicController : MonoBehaviour {
 
 
 	float generateM() {
-		return ((float)(int)Random.Range(-4, 4)) / ((float)(int)Random.Range(1, 4));
+		return ((float)(int)Random.Range(-2, 2)) / ((float)(int)Random.Range(1, 2));
 	}
 	int generateB() {
-		return (int) Random.Range(-8, 8);
+		return (int) Random.Range(-5, 5);
 	}
 
 
